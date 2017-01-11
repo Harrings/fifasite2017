@@ -1,0 +1,44 @@
+<h2>Add Game</h2>
+<form action="addgame.php" method="post">
+		<p>Winner</p>
+		<select name="winner">
+		<option value=null>None</option>
+		<option value="Sean">Sean</option>
+		<option value="Clint">Clint</option>
+		<option value="Will">Will</option>
+		</select>
+		<p>Goals Scored: <input type="number" name="goalfw" /></p>
+		<p>Loser</p>
+		<select name="loser">
+		<option value=null>None</option>
+		<option value="Sean">Sean</option>
+		<option value="Clint">Clint</option>
+		<option value="Will">Will</option>
+		</select>
+		<p>Goals Scored: <input type="number" name="goalfl" /></p>
+		<br><br>
+		<?php
+		
+	for($x=1;$x<=8;$x++)
+	{
+		echo "<p>GoalScorer".$x."</p>";
+		echo"<select name=\"Goal".$x."\">";
+		?>
+		<option value=null>None</option>
+		<?php
+//if (!isset($_SESSION["sort"])||($_SESSION["sort"]=="All"))
+//{
+		if (!$stmt = $mysqli->query("SELECT player FROM GoalScorer order by Goals DESC")) {
+		echo "Query Failed!: (" . $mysqli->errno . ") ". $mysqli->error;
+	}
+
+		while($row = mysqli_fetch_array($stmt))	
+		{
+			echo"<option value=".$row['player'].">".$row['player']."</option>";
+		}
+		echo"</select>";
+	}
+		?>
+		<br><br>
+		<input type="submit" value="Submit">
+</form>
